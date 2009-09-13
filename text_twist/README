@@ -1,0 +1,6 @@
+TextTwist
+===
+
+The objective of this puzzle is to implement a 'Text Twist' game solver. Given a word, you must find all other words in the supplied word list that can be made from the letters in that word (that are at least 3 characters in length).
+
+For an example, see http://get.games.yahoo.com/proddesc?gamekey=texttwist
