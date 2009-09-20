@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+if ARGV.length == 2
+  require 'text_twist_solver'
+  twister = TextTwistSolver.new(ARGV[0])
+  twister.results_for(ARGV[1]).each do |word|
+    puts word
+  end
+else
+  puts ARGV.length
+  puts "Usage: #{$0} dictionary_file source_word"
+end
