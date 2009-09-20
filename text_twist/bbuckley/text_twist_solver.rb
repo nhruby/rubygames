@@ -1,21 +1,33 @@
+#requires ruby 1.9 re: permutation, tap
+require 'set'
 
-
-class TextTwistSolver
+class TextTwistSolver  
   def initialize(file)
-    d = File.readlines(file)
-    @dic = d.map{|x| x.chomp! }
+    @dictionary = File.readlines(file).map(&:chomp).to_set
+  end    
+  
+  def results_for(word) 
+    # intersection of sets: a word's scrabble and the dictionary 
+    @dictionary & word.scrabble(3..word.length)
+  end   
+end
+
+class String  
+  # a String's scrabble is the set of possible words that can be made from its letters
+  # "test".scrabble =>
+  # <SortedSet: {"e", "es", "est", "estt", "et", "ets", "etst", "ett", 
+  # "etts", "s", "se", "set", "sett", "st", "ste", "stet", "stt", "stte", 
+  # "t", "te", "tes", "test", "tet", "tets", "ts", "tse", "tset", "tst", 
+  # "tste", "tt", "tte", "ttes", "tts", "ttse"}>
+  # optional sizes parameter (type integer or range) produces a subset of these
+  def scrabble(sizes = 1..length)
+    sizes = (sizes..sizes) if Integer === sizes
+    letters = split ""
+    SortedSet.new.tap do |set|
+      sizes.each do |n|
+        set.merge(letters.permutation(n).map(&:join).to_set)
+      end
+    end    
   end
   
-  def results_for(word)
-    a = word.each_char.to_a
-    ans = []     
-    3.upto(word.length) do |n|   
-      a.permutation(n) do |aa|
-        w = aa.join
-        ans << w if @dic.include?(w)
-      end
-    end
-    ans.uniq
-  end
-
-end
+end    
