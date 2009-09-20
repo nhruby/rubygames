@@ -1,4 +1,3 @@
-#requires ruby 1.9 re: permutation, tap
 require 'set'
 
 class TextTwistSolver  
